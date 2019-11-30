@@ -34,9 +34,10 @@ let projectConfig = {
 };
 
 let getElementConfig = () => {
-  // let elementData = cloneDeep(element);
-  let config = {};
-  return config;
+  let elementData = cloneDeep(elementConfig);
+  // let config = {};
+  elementData.uid = createUUID();
+  return elementData;
 };
 
 let getPageConfig = function() {

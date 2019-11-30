@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 const edit = {
   namespaced: true,
   state: {
@@ -12,7 +13,6 @@ const edit = {
       state.fontSize = data;
     },
     setProjectStyle(state, data) {
-      console.log("data", data, state.activeElementUUID);
       let arr = state.projectData.layouts[0].elements;
       arr.forEach(item => {
         if (item.uid == state.activeElementUUID) {
@@ -38,6 +38,7 @@ const edit = {
       commit("setProjectStyle", data);
     },
     updateProjectData({ commit }, data) {
+      console.log(data);
       commit("setProjectData", data);
     },
     updateID({ commit, state }, id) {
@@ -47,10 +48,13 @@ const edit = {
         return v.uid === id;
       });
       import(`@/ui/${curComponentData.code}/form.js`).then(res => {
-        res.default.config.forEach(element => {
-          element.value = curComponentData.config[element.name];
+        let arr = cloneDeep(res.default.config);
+        arr.forEach(element => {
+          if (curComponentData.config[element.name]) {
+            element.value = curComponentData.config[element.name];
+          }
         });
-        commit("setFormData", res.default.config);
+        commit("setFormData", arr);
       });
     }
   },

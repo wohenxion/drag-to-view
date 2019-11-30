@@ -6,6 +6,9 @@ module.exports = {
     }
   },
   productionSourceMap: process.env.NODE_ENV !== "production",
+  devServer: {
+    port: 9000
+  },
   chainWebpack: config => {
     config.resolve.alias.set("@", path.resolve("client"));
     config.resolve.alias.set("@common", path.resolve("common"));

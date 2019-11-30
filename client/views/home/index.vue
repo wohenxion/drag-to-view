@@ -1,15 +1,7 @@
 <template>
   <div class="home">
-    <button>新增U000001组件测试</button>
-    <br />
-    <br />
-    {{ formData }}
-    <br />
-    <!-- <img alt="Vue logo" src="@/assets/logo.png" /> -->
-    <template v-for="item in formData">
-      <input type="text" v-model="item.value" :key="item.name" />
-    </template>
-
+    <button @click="addUI">新增U000001组件测试</button>
+    <formRender></formRender>
     <template v-for="item in elements">
       <div class="menu-wrap" :key="item.uid">
         <render :componentData="item"></render>
@@ -22,9 +14,10 @@
 // @ is an alias to /src
 
 const render = () => import("@/components/render");
-import { mapState } from "vuex";
+const formRender = () => import("@/components/formRender");
 // import { cloneDeep } from "lodash";
 import dbModel from "../../views/DataModel";
+// import { mapState } from "vuex";
 
 export default {
   name: "home",
@@ -68,35 +61,25 @@ export default {
       projectData: dbModel.getProjectConfig()
     };
   },
-  computed: {
-    ...mapState({
-      formData: state => state.editor.formData
-    })
-    // ...mapGetters("editor", ["activeElement"])
-  },
   components: {
-    render
+    render,
+    formRender
   },
   mounted() {
     this.projectData.layouts[0].elements = this.elements;
-    this.$store.dispatch("editor/updateProjectData", this.projectData);
+    this.updatePro(this.projectData);
   },
   methods: {
-    arrToJson(arr) {
-      let data = {};
-      arr.map(item => {
-        data[item.name] = item.value;
-      });
-      this.$store.dispatch("editor/updateProjectStyle", data);
-      // return data;
-    }
-  },
-  watch: {
-    formData: {
-      handler(newData) {
-        this.arrToJson(newData);
-      },
-      deep: true
+    addUI() {
+      let elements = dbModel.getElementConfig();
+      elements.code = "U000001";
+      elements.elName = "测试";
+      this.projectData.layouts[0].elements.push(elements);
+      this.updatePro(this.projectData);
+      this.$store.dispatch("editor/updateID", elements.uid);
+    },
+    updatePro(data) {
+      this.$store.dispatch("editor/updateProjectData", data);
     }
   }
 };

@@ -1,15 +1,15 @@
 <template>
-  <div @click="showForm(componentData.uid)">
+  <menus :componentData="componentData">
     <component
       :is="code"
       :componentData="componentData"
       :config="componentData.config"
     ></component>
-  </div>
+  </menus>
 </template>
 <script>
 import { components } from "@/ui/index.js";
-import { mapActions } from "vuex";
+const menus = () => import("./menu.vue");
 // import { cloneDeep, merge } from "lodash";
 export default {
   props: ["componentData"],
@@ -20,19 +20,12 @@ export default {
     };
   },
   components: {
-    ...components
+    ...components,
+    menus
   },
   computed: {},
   mounted() {
     this.code = this.componentData.code;
-  },
-  methods: {
-    // showForm(uid) {
-    //   console.log("test", uid);
-    // }
-    ...mapActions("editor", {
-      showForm: "updateID"
-    })
   },
   watch: {}
 };
