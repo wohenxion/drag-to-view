@@ -4,12 +4,19 @@
     <div class="ui-group" v-for="(item, index) in uiArr" :key="index">
       <h4>{{ item.name }}</h4>
       <ul class="sidebar-ui-list">
-        <template v-for="(item, index) in item.list">
-          <li class="ui-list-item" :key="index" @click="addUI(item)">
-            <i class="ui-icon" :class="item.icon"></i>
-            <p>{{ item.name }}</p>
-          </li>
-        </template>
+        <draggable
+          v-model="uiArr.list"
+          group="people"
+          @start="drag = true"
+          @end="drag = false"
+        >
+          <template v-for="(item, index) in item.list">
+            <li class="ui-list-item" :key="index" @click="addUI(item)">
+              <i class="ui-icon" :class="item.icon"></i>
+              <p>{{ item.name }}</p>
+            </li>
+          </template>
+        </draggable>
       </ul>
     </div>
   </div>
@@ -17,6 +24,8 @@
 <script>
 import dbModel from "@/views/DataModel";
 import { mapState } from "vuex";
+const draggable = () => import("vuedraggable");
+// import draggable from 'vuedraggable'
 export default {
   data() {
     return {
@@ -48,6 +57,11 @@ export default {
               code: "U000002",
               name: "组件2",
               icon: "el-icon-potato-strips"
+            },
+            {
+              code: "U000001",
+              name: "组件1",
+              icon: "el-icon-tableware"
             }
           ]
         }
@@ -69,6 +83,9 @@ export default {
       this.$store.dispatch("editor/updateProjectData", this.projectDataInit);
       this.$store.dispatch("editor/updateID", elements.uid);
     }
+  },
+  components: {
+    draggable
   }
 };
 </script>
@@ -94,7 +111,7 @@ export default {
 
     .ui-list-item {
       display: inline-block;
-      width: 80px;
+      width: 75px;
       font-size: 12px;
       text-align: center;
       padding: 2px 0;
