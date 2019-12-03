@@ -1,12 +1,17 @@
 <template>
   <div>
-    <template v-for="item in formData">
-      {{ item.label }}:<input
-        :type="item.name == 'fontSize' ? 'number' : 'text'"
-        v-model="item.value"
-        :key="item.name"
-      />
-    </template>
+    <div v-if="formData.length">
+      <template v-for="item in formData">
+        {{ item.label }}:<input
+          :type="item.name == 'fontSize' ? 'number' : 'text'"
+          v-model="item.value"
+          :key="item.name"
+        />
+      </template>
+    </div>
+    <div v-else>
+      请在画板上选择需要编辑得元素
+    </div>
   </div>
 </template>
 <script>

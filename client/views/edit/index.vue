@@ -1,12 +1,10 @@
 <template>
-  <div class="edit">
+  <div class="edit" ref="edit">
     <layout>
       <template v-slot:sideBar> </template>
-      <template v-slot:nenu>
-        <button @click="addUI">新增U000001组件测试</button>
-      </template>
+      <template v-slot:menu> <menus></menus> </template>
       <template v-for="item in elements">
-        <div class="menu-wrap" :key="item.uid">
+        <div class="menu-wrap" :data-ui="item.code" :key="item.uid">
           <render :componentData="item"></render>
         </div>
       </template>
@@ -21,8 +19,9 @@
 // @ is an alias to /src
 
 const render = () => import("@/components/render");
-const formRender = () => import("@/components/formRender");
+const formRender = () => import("@/views/edit/tool/formRender");
 const layout = () => import("./layout/index");
+const menus = () => import("./tool/left-bar/index");
 // import { cloneDeep } from "lodash";
 import dbModel from "../../views/DataModel";
 // import { mapState } from "vuex";
@@ -72,7 +71,8 @@ export default {
   components: {
     render,
     formRender,
-    layout
+    layout,
+    menus
   },
   mounted() {
     this.projectData.layouts[0].elements = this.elements;
@@ -93,3 +93,8 @@ export default {
   }
 };
 </script>
+<style scoped lang="scss">
+.edit {
+  height: 100%;
+}
+</style>

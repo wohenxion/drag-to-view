@@ -1,12 +1,13 @@
 <template>
   <div
+    class="u000001"
     :name="config.fontSize"
     :style="{
       fontSize: config.fontSize + 'px',
       color: config.color
     }"
   >
-    {{ componentData.code }} ===== {{ config }}
+    {{ componentData.code }}
   </div>
 </template>
 <script>
@@ -30,3 +31,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scope>
+.u000001 {
+  height: 500px;
+}
+</style>
