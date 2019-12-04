@@ -1,6 +1,8 @@
 <template>
   <div class="component-wrap">
-    <div class="mask" @click="showForm(componentData.uid)"></div>
+    <div class="mask" @click="showForm(componentData.uid)">
+      <span class="component-name">{{ componentData.elName }}</span>
+    </div>
     <div class="menu-wrap">
       <button>{{ componentData.code }}</button>
       <button>删除</button>
@@ -23,9 +25,43 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.edit-container {
+  .menu-wrap {
+    &:nth-child(odd) {
+      .showLayout {
+        .mask {
+          background-color: #f1f1f1;
+        }
+      }
+    }
+  }
+}
+</style>
 <style scoped lang="scss">
 .component-wrap {
   position: relative;
+  &.showLayout {
+    height: 60px;
+    overflow: hidden;
+
+    .mask {
+      display: block;
+      background: #fff;
+      border: none;
+      line-height: 60px;
+    }
+    .component-name {
+      display: block;
+    }
+    &:hover {
+      .mask {
+        background: #409eff;
+        color: #fff;
+        z-index: 101;
+      }
+    }
+  }
   &:hover {
     .mask,
     .menu-wrap {
@@ -37,17 +73,21 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0.2;
     top: 0;
     left: 0;
-    background: #000;
     cursor: pointer;
     z-index: 100;
+    border: 2px dashed #409eff;
   }
 }
 .menu-wrap {
   display: none;
   position: absolute;
-  top: -22px;
+  top: 0;
+  // top: -22px;
+  z-index: 101;
+  .component-name {
+    display: none;
+  }
 }
 </style>

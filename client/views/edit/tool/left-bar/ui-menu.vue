@@ -5,8 +5,9 @@
       <h4>{{ item.name }}</h4>
       <ul class="sidebar-ui-list">
         <draggable
-          v-model="uiArr.list"
-          group="people"
+          v-model="uiArr"
+          :group="{ name: 'people', pull: 'clone', put: false }"
+          :clone="cloneDog"
           @start="drag = true"
           @end="drag = false"
         >
@@ -82,6 +83,20 @@ export default {
       // this.updatePro(projectDataInit);
       this.$store.dispatch("editor/updateProjectData", this.projectDataInit);
       this.$store.dispatch("editor/updateID", elements.uid);
+    },
+    cloneDog(item) {
+      console.log(item);
+      return {
+        uid: "u0001",
+        code: "U000001",
+        elName: item + "U000001", // 组件名
+        animations: [], // 动画
+        events: [], // 事件
+        config: {
+          fontSize: 20,
+          color: "#78d433"
+        } // 表单配置
+      };
     }
   },
   components: {

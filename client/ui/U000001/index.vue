@@ -33,6 +33,6 @@ export default {
 </script>
 <style lang="scss" scope>
 .u000001 {
-  height: 500px;
+  height: 300px;
 }
 </style>

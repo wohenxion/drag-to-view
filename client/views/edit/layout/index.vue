@@ -44,6 +44,7 @@ main {
   .edit-container {
     background-color: #fff;
     margin: 40px 20px;
+    box-shadow: 0 0 10px 2px #cecece;
   }
 }
 footer {
