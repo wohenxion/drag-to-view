@@ -9,7 +9,8 @@ export default {
     {
       label: "字体颜色",
       name: "color",
-      value: "red"
+      value: "#FF0000",
+      type: "colorPick"
     }
   ]
 };

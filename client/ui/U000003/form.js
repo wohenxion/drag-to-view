@@ -9,7 +9,8 @@ export default {
     {
       label: "字体颜色",
       name: "color",
-      value: "yellow"
+      value: "yellow",
+      type: "colorPick"
     }
   ]
 };

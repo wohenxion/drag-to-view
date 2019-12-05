@@ -6,7 +6,8 @@ const edit = {
     projectStyle: {},
     projectData: {},
     activeElementUUID: "",
-    formData: []
+    formData: {},
+    formObj: {}
   },
   mutations: {
     setFont(state, data) {
@@ -44,7 +45,7 @@ const edit = {
     updateID({ commit, state }, id) {
       commit("setUid", id);
       if (!id) {
-        commit("setFormData", []);
+        commit("setFormData", {});
         return;
       }
       let curComponentData = {};
@@ -52,13 +53,14 @@ const edit = {
         return v.uid === id;
       });
       import(`@/ui/${curComponentData.code}/form.js`).then(res => {
-        let arr = cloneDeep(res.default.config);
+        let formObj = cloneDeep(res.default);
+        let arr = formObj.config;
         arr.forEach(element => {
           if (curComponentData.config[element.name]) {
             element.value = curComponentData.config[element.name];
           }
         });
-        commit("setFormData", arr);
+        commit("setFormData", formObj);
       });
     }
   },
