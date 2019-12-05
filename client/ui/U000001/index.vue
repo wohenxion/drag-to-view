@@ -1,7 +1,6 @@
 <template>
   <div
     class="u000001"
-    :name="config.fontSize"
     :style="{
       fontSize: config.fontSize + 'px',
       color: config.color

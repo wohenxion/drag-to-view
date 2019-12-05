@@ -10,11 +10,11 @@
     <nav>
       <slot name="menu"></slot>
     </nav>
-    <main>
+    <main @click.stop="">
       <!-- 我们希望把主要内容放这里 -->
       <div class="edit-container"><slot></slot></div>
     </main>
-    <article class="form-wrap">
+    <article class="form-wrap" @click.stop="">
       <slot name="right"></slot>
     </article>
     <footer>
@@ -23,6 +23,7 @@
     </footer>
   </div>
 </template>
+<script></script>
 <style lang="scss" scoped>
 .layout {
   display: flex;

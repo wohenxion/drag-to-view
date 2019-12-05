@@ -1,14 +1,17 @@
 <template>
   <div class="ui-list-container">
     <h3>组件列表</h3>
-    <div class="ui-group" v-for="(item, index) in uiArr" :key="index">
+    <div
+      class="ui-group"
+      v-for="(item, index) in uiArr"
+      :key="index + item.name"
+    >
       <h4>{{ item.name }}</h4>
       <ul class="sidebar-ui-list">
         <draggable
-          v-model="uiArr"
+          v-model="uiArr[index].list"
           :group="{ name: 'people', pull: 'clone', put: false }"
           :clone="cloneDog"
-          @start="drag = true"
           @end="drag = false"
         >
           <template v-for="(item, index) in item.list">
@@ -23,7 +26,7 @@
   </div>
 </template>
 <script>
-import dbModel from "@/views/DataModel";
+// import dbModel from "@/views/DataModel";
 import { mapState } from "vuex";
 const draggable = () => import("vuedraggable");
 // import draggable from 'vuedraggable'
@@ -34,6 +37,11 @@ export default {
         {
           name: "基础组件",
           list: [
+            {
+              code: "U000001",
+              name: "组件1",
+              icon: "el-icon-tableware"
+            },
             {
               code: "U000001",
               name: "组件1",
@@ -63,6 +71,11 @@ export default {
               code: "U000001",
               name: "组件1",
               icon: "el-icon-tableware"
+            },
+            {
+              code: "U000001",
+              name: "组件1",
+              icon: "el-icon-tableware"
             }
           ]
         }
@@ -75,27 +88,14 @@ export default {
     })
   },
   methods: {
-    addUI(item) {
-      let elements = dbModel.getElementConfig();
-      elements.code = item.code;
-      elements.elName = item.name;
-      this.projectDataInit.layouts[0].elements.push(elements);
-      // this.updatePro(projectDataInit);
-      this.$store.dispatch("editor/updateProjectData", this.projectDataInit);
-      this.$store.dispatch("editor/updateID", elements.uid);
-    },
     cloneDog(item) {
-      console.log(item);
       return {
-        uid: "u0001",
-        code: "U000001",
-        elName: item + "U000001", // 组件名
+        uid: Math.random().toString(36),
+        code: item.code,
+        elName: item.name, // 组件名
         animations: [], // 动画
         events: [], // 事件
-        config: {
-          fontSize: 20,
-          color: "#78d433"
-        } // 表单配置
+        config: {} // 表单配置
       };
     }
   },
@@ -125,6 +125,7 @@ export default {
     // display: flex;
 
     .ui-list-item {
+      cursor: move;
       display: inline-block;
       width: 75px;
       font-size: 12px;
@@ -132,7 +133,6 @@ export default {
       padding: 2px 0;
       margin: 5px;
       border: 1px solid #dddddd;
-      cursor: pointer;
       background: #f4f4f4;
       &:hover {
         border-color: #409eff;

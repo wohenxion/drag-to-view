@@ -38,11 +38,15 @@ const edit = {
       commit("setProjectStyle", data);
     },
     updateProjectData({ commit }, data) {
-      console.log(data);
+      // console.log(data);
       commit("setProjectData", data);
     },
     updateID({ commit, state }, id) {
       commit("setUid", id);
+      if (!id) {
+        commit("setFormData", []);
+        return;
+      }
       let curComponentData = {};
       curComponentData = state.projectData.layouts[0].elements.find(v => {
         return v.uid === id;

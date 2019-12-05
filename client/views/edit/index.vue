@@ -1,6 +1,5 @@
 <template>
   <div class="edit" ref="edit">
-    {{ elements }}
     <layout>
       <template v-slot:sideBar> </template>
       <template v-slot:menu> <menus></menus> </template>
@@ -9,15 +8,18 @@
         group="people"
         ghost-class="ghost"
         chosen-class="chosen"
+        :setData="setData"
+        @change="change"
+        @choose="choose"
         @end="drag = false"
       >
         <transition-group type="transition" name="flip-list">
-          <template v-for="item in elements">
+          <template v-for="(item, index) in elements">
             <div
               class="menu-wrap"
               :data-ui="item.code"
               :key="item.uid"
-              @dragstart="start($event)"
+              :class="{ active: currIndex !== '' && currIndex == index }"
             >
               <render :componentData="item"></render>
             </div>
@@ -82,7 +84,8 @@ export default {
           } // 表单配置
         }
       ],
-      projectData: dbModel.getProjectConfig()
+      projectData: dbModel.getProjectConfig(),
+      currIndex: ""
     };
   },
   components: {
@@ -95,27 +98,38 @@ export default {
   mounted() {
     this.projectData.layouts[0].elements = this.elements;
     this.updatePro(this.projectData);
+    this.bindEvent();
   },
   methods: {
-    addUI() {
-      alert(1);
-      let elements = dbModel.getElementConfig();
-      elements.code = "U000001";
-      elements.elName = "测试";
-      this.projectData.layouts[0].elements.push(elements);
-      this.updatePro(this.projectData);
-      this.$store.dispatch("editor/updateID", elements.uid);
-    },
     updatePro(data) {
       this.$store.dispatch("editor/updateProjectData", data);
     },
     // 拖拽组件替换为默认样式
-    start(ev) {
+    setData(dataTransfer) {
       const img = new Image();
       img.width = 100;
       img.height = 100;
       img.src = "#";
-      ev.dataTransfer.setDragImage(img, 50, 20);
+      dataTransfer.setDragImage(img, 50, 20);
+    },
+    change(item) {
+      this.currIndex = item[Object.keys(item)[0]].newIndex;
+      this.projectData.layouts[0].elements = this.elements;
+      this.updatePro(this.projectData);
+      this.$store.dispatch(
+        "editor/updateID",
+        item[Object.keys(item)[0]].element.uid
+      );
+    },
+    choose(item) {
+      this.currIndex = item.oldIndex;
+    },
+    bindEvent() {
+      let that = this;
+      window.addEventListener("click", function() {
+        that.currIndex = "";
+        that.$store.dispatch("editor/updateID", "");
+      });
     }
   }
 };
@@ -130,10 +144,19 @@ export default {
 .no-move {
   transition: transform 0s;
 }
+</style>
+<style lang="scss">
+.edit .menu-wrap.active {
+  .mask {
+    display: block;
+    border: 2px dashed #e2115c;
+  }
+}
 .ghost {
   height: 80px;
   position: relative;
   box-sizing: border-box;
+  overflow: hidden;
   &::after {
     content: "释放之后，组件将会放在此处";
     position: absolute;
@@ -148,10 +171,4 @@ export default {
     box-sizing: border-box;
   }
 }
-// .chosen {
-//   width: 150px;
-//   height: 40px;
-//   background: red;
-//   overflow:hidden;
-// }
 </style>
