@@ -4,10 +4,51 @@
       <span class="component-name">{{ componentData.elName }}</span>
     </div>
     <div class="menu-wrap">
-      <button>{{ componentData.code }}</button>
-      <button>删除</button>
-      <button>上移</button>
-      <button>下移</button>
+      <el-tooltip
+        class="item"
+        effect="dark"
+        :content="componentData.code"
+        placement="top"
+      >
+        <span class="menu-icon">{{ componentData.elName }}</span>
+      </el-tooltip>
+      <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+        <i
+          class="menu-icon el-icon-setting"
+          @click="showForm(componentData.uid)"
+        ></i>
+      </el-tooltip>
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="上移"
+        placement="top"
+        v-if="index != 0"
+      >
+        <i
+          class="menu-icon el-icon-top"
+          @click="upPosition({ name: 'up', index })"
+        ></i>
+      </el-tooltip>
+      <el-tooltip class="item" effect="dark" content="下移" placement="top">
+        <i
+          class="menu-icon el-icon-bottom"
+          @click="upPosition({ name: 'down', index })"
+          v-if="index != count - 1"
+        ></i>
+      </el-tooltip>
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="删除"
+        placement="top"
+        v-if="count > 1"
+      >
+        <i
+          class="menu-icon el-icon-delete"
+          @click="upPosition({ name: 'delete', index })"
+        ></i>
+      </el-tooltip>
     </div>
     <div class="component-content">
       <slot></slot>
@@ -15,13 +56,36 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
-  props: ["componentData"],
+  props: ["componentData", "index"],
+  data() {
+    return {
+      count: ""
+    };
+  },
+  computed: {
+    ...mapState("editor", ["projectData"])
+  },
+  mounted() {
+    this.updateCount();
+  },
   methods: {
     ...mapActions("editor", {
-      showForm: "updateID"
-    })
+      showForm: "updateID",
+      upPosition: "updateElementPosition"
+    }),
+    updateCount() {
+      this.count = this.projectData.layouts[0].elements.length;
+    }
+  },
+  watch: {
+    projectData: {
+      deep: true,
+      handler() {
+        this.updateCount();
+      }
+    }
   }
 };
 </script>
@@ -81,11 +145,31 @@ export default {
   }
 }
 .menu-wrap {
-  display: none;
+  display: block;
   position: absolute;
-  top: 0;
+  top: 2px;
+  left: 2px;
   // top: -22px;
   z-index: 101;
+  background: #ffffff;
+  padding: 2px 10px;
+  box-shadow: 0 0 5px 0px #929191;
+  border-radius: 5px;
+  .item {
+    padding: 4px;
+    border-radius: 50px;
+    background: #409eff;
+    color: #fff;
+    margin: 2px 3px;
+    font-size: 14px;
+    &:hover {
+      cursor: pointer;
+      background: #333;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
   .component-name {
     display: none;
   }

@@ -1,5 +1,5 @@
 <template>
-  <menus :componentData="componentData">
+  <menus :componentData="componentData" :index="index">
     <component
       :is="code"
       :componentData="componentData"
@@ -12,7 +12,7 @@ import { components } from "@/ui/index.js";
 const menus = () => import("./menu.vue");
 // import { cloneDeep, merge } from "lodash";
 export default {
-  props: ["componentData"],
+  props: ["componentData", "index"],
   data() {
     return {
       code: "",

@@ -54,7 +54,9 @@ export default {
   watch: {
     formData: {
       handler(newData) {
-        this.arrToJson(newData.config);
+        if (Object.keys(newData).length) {
+          this.arrToJson(newData.config);
+        }
       },
       deep: true
     }

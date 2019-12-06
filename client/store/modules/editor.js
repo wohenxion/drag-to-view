@@ -25,15 +25,38 @@ const edit = {
       state.activeElementUUID = data;
     },
     setProjectData(state, data) {
-      state.projectData = data;
+      state.projectData = {};
+      state.projectData = Object.assign({}, data);
     },
     setFormData(state, data) {
       state.formData = data;
     }
   },
   actions: {
-    updateFont({ commit }, data) {
-      commit("setFont", data);
+    updateElementPosition({ state }, data) {
+      let obj = state.projectData;
+      let elements = obj.layouts[0].elements;
+      let actions = {
+        delete: index => {
+          elements.splice(index, 1);
+        },
+        up: index => {
+          elements.splice(
+            index - 1,
+            1,
+            ...elements.splice(index, 1, elements[index - 1])
+          );
+        },
+        down: index => {
+          elements.splice(
+            index + 1,
+            1,
+            ...elements.splice(index, 1, elements[index + 1])
+          );
+        }
+      };
+      actions[data.name](data.index);
+      // commit("setProjectData", obj);
     },
     updateProjectStyle({ commit }, data) {
       commit("setProjectStyle", data);

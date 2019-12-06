@@ -52,6 +52,6 @@ footer {
   background: black;
 }
 .form-wrap {
-  width: 400px;
+  width: 325px;
 }
 </style>

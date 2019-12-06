@@ -10,7 +10,6 @@
         chosen-class="chosen"
         :setData="setData"
         @change="change"
-        @choose="choose"
         @end="drag = false"
       >
         <transition-group type="transition" name="flip-list">
@@ -21,7 +20,7 @@
               :key="item.uid"
               :class="{ active: currIndex !== '' && currIndex == index }"
             >
-              <render :componentData="item"></render>
+              <render :componentData="item" :index="index"></render>
             </div>
           </template>
         </transition-group>
@@ -43,7 +42,7 @@ const layout = () => import("./layout/index");
 const menus = () => import("./tool/left-bar/index");
 // import { cloneDeep } from "lodash";
 import dbModel from "../../views/DataModel";
-// import { mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "home",
@@ -53,7 +52,7 @@ export default {
         {
           uid: "u0001",
           code: "U000001",
-          elName: "U000001", // 组件名
+          elName: "组件一", // 组件名
           animations: [], // 动画
           events: [], // 事件
           config: {
@@ -64,7 +63,7 @@ export default {
         {
           uid: "u0002",
           code: "U000002",
-          elName: "U000002", // 组件名
+          elName: "组件二", // 组件名
           animations: [], // 动画
           events: [], // 事件
           config: {
@@ -75,7 +74,7 @@ export default {
         {
           uid: "u0003",
           code: "U000001",
-          elName: "U000001", // 组件名
+          elName: "组件一", // 组件名
           animations: [], // 动画
           events: [], // 事件
           config: {
@@ -95,7 +94,11 @@ export default {
     menus,
     draggable
   },
+  computed: {
+    ...mapState("editor", ["activeElementUUID"])
+  },
   mounted() {
+    // this.projectData.layouts[0] 此处只考虑单布局，所以写死为0;如果要实现多布局，需要外面再循环，然后取对应的layout下标
     this.projectData.layouts[0].elements = this.elements;
     this.updatePro(this.projectData);
     this.bindEvent();
@@ -113,7 +116,7 @@ export default {
       dataTransfer.setDragImage(img, 50, 20);
     },
     change(item) {
-      this.currIndex = item[Object.keys(item)[0]].newIndex;
+      // this.currIndex = item[Object.keys(item)[0]].newIndex;
       this.projectData.layouts[0].elements = this.elements;
       this.updatePro(this.projectData);
       this.$store.dispatch(
@@ -129,6 +132,13 @@ export default {
       window.addEventListener("click", function() {
         that.currIndex = "";
         that.$store.dispatch("editor/updateID", "");
+      });
+    }
+  },
+  watch: {
+    activeElementUUID(newID) {
+      this.currIndex = this.projectData.layouts[0].elements.findIndex(item => {
+        return item.uid == newID;
       });
     }
   }
