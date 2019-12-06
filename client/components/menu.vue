@@ -145,7 +145,7 @@ export default {
   }
 }
 .menu-wrap {
-  display: block;
+  display: none;
   position: absolute;
   top: 2px;
   left: 2px;
