@@ -124,9 +124,6 @@ export default {
         item[Object.keys(item)[0]].element.uid
       );
     },
-    choose(item) {
-      this.currIndex = item.oldIndex;
-    },
     bindEvent() {
       let that = this;
       window.addEventListener("click", function() {
@@ -136,6 +133,14 @@ export default {
     }
   },
   watch: {
+    projectData: {
+      deep: true,
+      handler(newObj) {
+        this.currIndex = newObj.layouts[0].elements.findIndex(item => {
+          return item.uid == this.activeElementUUID;
+        });
+      }
+    },
     activeElementUUID(newID) {
       this.currIndex = this.projectData.layouts[0].elements.findIndex(item => {
         return item.uid == newID;
