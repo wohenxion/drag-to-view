@@ -1,4 +1,5 @@
 import { cloneDeep } from "lodash";
+import { MessageBox, Message } from "element-ui";
 const edit = {
   namespaced: true,
   state: {
@@ -38,7 +39,19 @@ const edit = {
       let elements = obj.layouts[0].elements;
       let actions = {
         delete: index => {
-          elements.splice(index, 1);
+          MessageBox.confirm("此操作将会删除该组件, 是否继续?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              elements.splice(index, 1);
+              Message({
+                type: "success",
+                message: "删除成功!"
+              });
+            })
+            .catch(() => {});
         },
         up: index => {
           elements.splice(
@@ -62,7 +75,6 @@ const edit = {
       commit("setProjectStyle", data);
     },
     updateProjectData({ commit }, data) {
-      // console.log(data);
       commit("setProjectData", data);
     },
     updateID({ commit, state }, id) {
@@ -71,20 +83,19 @@ const edit = {
         commit("setFormData", {});
         return;
       }
-      let curComponentData = {};
+      let curComponentData = [];
       curComponentData = state.projectData.layouts[0].elements.find(v => {
         return v.uid === id;
       });
-      import(`@/ui/${curComponentData.code}/form.js`).then(res => {
-        let formObj = cloneDeep(res.default);
-        let arr = formObj.config;
-        arr.forEach(element => {
-          if (curComponentData.config[element.name]) {
-            element.value = curComponentData.config[element.name];
-          }
+
+      if (!cloneDeep(curComponentData.data.config).length) {
+        import(`@/ui/${curComponentData.code}/form.js`).then(res => {
+          curComponentData.data = cloneDeep(res.default);
+          commit("setFormData", curComponentData.data);
         });
-        commit("setFormData", formObj);
-      });
+      } else {
+        commit("setFormData", curComponentData.data);
+      }
     }
   },
   getters: {

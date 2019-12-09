@@ -95,7 +95,10 @@ export default {
         elName: item.name, // 组件名
         animations: [], // 动画
         events: [], // 事件
-        config: {} // 表单配置
+        data: {
+          name: "",
+          config: []
+        } // 表单配置
       };
     }
   },

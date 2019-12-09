@@ -29,10 +29,6 @@
   display: flex;
   height: 100%;
 }
-header {
-  background: yellow;
-  min-height: 40px;
-}
 nav {
   width: 240px;
 }
@@ -47,6 +43,16 @@ main {
     margin: 40px 20px;
     box-shadow: 0 0 10px 2px #cecece;
   }
+}
+header {
+  height: 58px;
+  // line-height: 58px;
+  overflow: hidden;
+  position: absolute;
+  box-shadow: rgb(187, 183, 183) 0px 2px 4px;
+  width: 100%;
+  left: 0;
+  top: 0;
 }
 footer {
   background: black;

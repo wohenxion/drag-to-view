@@ -6,7 +6,8 @@
       color: config.color
     }"
   >
-    {{ componentData.code }}
+    {{ componentData.code }}<br />
+    {{ config }}
   </div>
 </template>
 <script>

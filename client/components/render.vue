@@ -3,27 +3,38 @@
     <component
       :is="code"
       :componentData="componentData"
-      :config="componentData.config"
+      :config="configData"
     ></component>
   </menus>
 </template>
 <script>
 import { components } from "@/ui/index.js";
 const menus = () => import("./menu.vue");
-// import { cloneDeep, merge } from "lodash";
+// import { flatten } from "lodash";
 export default {
   props: ["componentData", "index"],
   data() {
     return {
-      code: "",
-      config: {}
+      code: ""
     };
   },
   components: {
     ...components,
     menus
   },
-  computed: {},
+  computed: {
+    configData() {
+      let arr = [];
+      this.componentData.data.config.forEach(item => {
+        arr = arr.concat(item.items);
+      });
+      let data = {};
+      arr.map(item => {
+        data[item.name] = item.value;
+      });
+      return data;
+    }
+  },
   mounted() {
     this.code = this.componentData.code;
   },

@@ -7,7 +7,7 @@ let elementConfig = {
   elName: "", // 组件名
   animations: [], // 动画
   events: [], // 事件
-  config: {} // 表单配置
+  data: [] // 表单配置
 };
 // 页面(布局)配置信息字段
 let layoutConfig = {

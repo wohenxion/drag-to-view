@@ -1,7 +1,7 @@
 <template>
   <div class="edit" ref="edit">
     <layout>
-      <template v-slot:sideBar> </template>
+      <template v-slot:header><heads></heads> </template>
       <template v-slot:menu> <menus></menus> </template>
       <draggable
         v-model="elements"
@@ -40,6 +40,7 @@ const formRender = () => import("@/views/edit/tool/formRender");
 const draggable = () => import("vuedraggable");
 const layout = () => import("./layout/index");
 const menus = () => import("./tool/left-bar/index");
+const heads = () => import("./tool/head");
 // import { cloneDeep } from "lodash";
 import dbModel from "../../views/DataModel";
 import { mapState } from "vuex";
@@ -55,10 +56,39 @@ export default {
           elName: "组件一", // 组件名
           animations: [], // 动画
           events: [], // 事件
-          config: {
-            fontSize: 20,
-            color: "#78d433"
-          } // 表单配置
+          data: {
+            name: "标题栏",
+            config: [
+              {
+                label: "数据",
+                items: [
+                  {
+                    label: "标题名字",
+                    name: "title",
+                    value: "我是标题qqqqq"
+                  }
+                ]
+              },
+              {
+                label: "样式",
+                items: [
+                  {
+                    label: "字体大小",
+                    name: "fontSize",
+                    value: 22,
+                    type: "num",
+                    range: [12, 150]
+                  },
+                  {
+                    label: "字体颜色",
+                    name: "color",
+                    value: "#40ffa7",
+                    type: "colorPick"
+                  }
+                ]
+              }
+            ] // 表单配置
+          }
         },
         {
           uid: "u0002",
@@ -66,9 +96,51 @@ export default {
           elName: "组件二", // 组件名
           animations: [], // 动画
           events: [], // 事件
-          config: {
-            fontSize: 25,
-            color: "#d43358"
+          data: {
+            name: "标题栏2",
+            config: [
+              {
+                label: "样式",
+                items: [
+                  {
+                    label: "标题配置",
+                    items: [
+                      {
+                        label: "标题名字",
+                        name: "title",
+                        value: "我是标题qqqqq2"
+                      }
+                    ]
+                  },
+                  {
+                    label: "常用设置",
+                    items: [
+                      {
+                        label: "字体大小",
+                        name: "fontSize",
+                        value: 18,
+                        type: "num",
+                        range: [12, 150]
+                      },
+                      {
+                        label: "字体颜色",
+                        name: "color",
+                        value: "#70ffa7",
+                        type: "colorPick",
+                        col: 12
+                      },
+                      {
+                        label: "背景颜色",
+                        name: "bg_color",
+                        value: "#E39417",
+                        type: "colorPick",
+                        col: 12
+                      }
+                    ]
+                  }
+                ]
+              }
+            ] // 表单配置
           } // 表单配置
         },
         {
@@ -77,10 +149,39 @@ export default {
           elName: "组件一", // 组件名
           animations: [], // 动画
           events: [], // 事件
-          config: {
-            fontSize: 30,
-            color: "#3382d4"
-          } // 表单配置
+          data: {
+            name: "标题栏3",
+            config: [
+              {
+                label: "数据",
+                items: [
+                  {
+                    label: "标题名字",
+                    name: "title",
+                    value: "我是标题qqqqq2"
+                  }
+                ]
+              },
+              {
+                label: "样式",
+                items: [
+                  {
+                    label: "字体大小",
+                    name: "fontSize",
+                    value: 30,
+                    type: "num",
+                    range: [12, 150]
+                  },
+                  {
+                    label: "字体颜色",
+                    name: "color",
+                    value: "#BE216D",
+                    type: "colorPick"
+                  }
+                ]
+              }
+            ] // 表单配置
+          } // 表单配置 // 表单配置
         }
       ],
       projectData: dbModel.getProjectConfig(),
@@ -92,6 +193,7 @@ export default {
     formRender,
     layout,
     menus,
+    heads,
     draggable
   },
   computed: {
@@ -119,6 +221,7 @@ export default {
       // this.currIndex = item[Object.keys(item)[0]].newIndex;
       this.projectData.layouts[0].elements = this.elements;
       this.updatePro(this.projectData);
+      console.log("edit/index/id", item[Object.keys(item)[0]].element.uid);
       this.$store.dispatch(
         "editor/updateID",
         item[Object.keys(item)[0]].element.uid

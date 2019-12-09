@@ -2,30 +2,51 @@
   <div class="form-container">
     <div v-if="Object.keys(formData).length">
       <el-tabs>
-        <el-tab-pane label="用户管理">
-          <el-form label-width="80px" :model="formData" label-position="right">
-            <template v-for="(item, index) in formData.config">
-              <template v-if="item.type == undefined || item.type == 'input'">
-                <el-col :span="item.col || 24" :key="index">
-                  <el-form-item :label="item.label">
-                    <el-input v-model="item.value"></el-input>
-                  </el-form-item>
-                </el-col>
+        <template v-for="(item, index) in formData.config">
+          <el-tab-pane :label="item.label" :key="index">
+            <el-form label-width="80px" :model="item" label-position="right">
+              <template v-for="(item, index) in item.items">
+                <template v-if="item.type == undefined || item.type == 'input'">
+                  <el-col :span="item.col || 24" :key="index">
+                    <el-form-item :label="item.label">
+                      <el-input v-model="item.value"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </template>
+                <template v-if="item.type == 'num'">
+                  <el-col :span="item.col || 24" :key="index">
+                    <el-form-item :label="item.label">
+                      <el-input-number
+                        v-model="item.value"
+                        controls-position="right"
+                        :min="
+                          item.range && item.range.length
+                            ? item.range[0]
+                            : -Infinity
+                        "
+                        :max="
+                          item.range && item.range.length > 1
+                            ? item.range[1]
+                            : Infinity
+                        "
+                      ></el-input-number>
+                    </el-form-item>
+                  </el-col>
+                </template>
+                <template v-if="item.type == 'colorPick'">
+                  <el-col :span="item.col || 24" :key="index">
+                    <el-form-item :label="item.label">
+                      <el-color-picker
+                        v-model="item.value"
+                        size="medium"
+                      ></el-color-picker>
+                    </el-form-item>
+                  </el-col>
+                </template>
               </template>
-              <template v-if="item.type == 'colorPick'">
-                <el-col :span="item.col || 24" :key="index">
-                  <el-form-item :label="item.label">
-                    <el-color-picker
-                      v-model="item.value"
-                      size="medium"
-                    ></el-color-picker>
-                  </el-form-item>
-                </el-col>
-              </template>
-            </template>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="配置管理">配置管理</el-tab-pane>
+            </el-form>
+          </el-tab-pane>
+        </template>
       </el-tabs>
     </div>
     <div v-else>
@@ -42,25 +63,25 @@ export default {
     })
   },
   methods: {
-    arrToJson(arr) {
-      let data = {};
-      arr.map(item => {
-        data[item.name] = item.value;
-      });
-      this.$store.dispatch("editor/updateProjectStyle", data);
-      // return data;
-    }
-  },
-  watch: {
-    formData: {
-      handler(newData) {
-        if (Object.keys(newData).length) {
-          this.arrToJson(newData.config);
-        }
-      },
-      deep: true
-    }
+    // arrToJson(arr) {
+    //   let data = {};
+    //   arr.map(item => {
+    //     data[item.name] = item.value;
+    //   });
+    //   this.$store.dispatch("editor/updateProjectStyle", data);
+    //   // return data;
+    // }
   }
+  // watch: {
+  //   formData: {
+  //     handler(newData) {
+  //       if (Object.keys(newData).length) {
+  //         this.arrToJson(newData.config);
+  //       }
+  //     },
+  //     deep: true
+  //   }
+  // }
 };
 </script>
 <style scoped lang="scss">
