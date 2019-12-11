@@ -1,34 +1,25 @@
-# drag-to-view
+### 前端可视化编辑器
+所拖即所见,用vue实现一个简单的拖拽页面布局
 
-## Project setup
+#### 技术栈 
+只是简单实现，无后端逻辑，后续完善
+1. `vue`
+2. `vuex`
+3. `sass`
+4. `element-ui`
+5. `loadsh`
+
+#### 项目初始化
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+#### 启动
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+#### 编译
 ```
 npm run build
 ```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
