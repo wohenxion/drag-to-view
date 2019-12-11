@@ -11,8 +11,14 @@
         :setData="setData"
         @change="change"
         @end="drag = false"
+        class="dragArea"
       >
-        <transition-group type="transition" name="flip-list">
+        <transition-group
+          type="transition"
+          name="flip-list"
+          tag="div"
+          class="dragArea-transiton"
+        >
           <template v-for="(item, index) in elements">
             <div
               class="menu-wrap"
@@ -49,141 +55,7 @@ export default {
   name: "home",
   data() {
     return {
-      elements: [
-        {
-          uid: "u0001",
-          code: "U000001",
-          elName: "组件一", // 组件名
-          animations: [], // 动画
-          events: [], // 事件
-          data: {
-            name: "标题栏",
-            config: [
-              {
-                label: "数据",
-                items: [
-                  {
-                    label: "标题名字",
-                    name: "title",
-                    value: "我是标题qqqqq"
-                  }
-                ]
-              },
-              {
-                label: "样式",
-                items: [
-                  {
-                    label: "字体大小",
-                    name: "fontSize",
-                    value: 22,
-                    type: "num",
-                    range: [12, 150]
-                  },
-                  {
-                    label: "字体颜色",
-                    name: "color",
-                    value: "#40ffa7",
-                    type: "colorPick"
-                  }
-                ]
-              }
-            ] // 表单配置
-          }
-        },
-        {
-          uid: "u0002",
-          code: "U000002",
-          elName: "组件二", // 组件名
-          animations: [], // 动画
-          events: [], // 事件
-          data: {
-            name: "标题栏2",
-            config: [
-              {
-                label: "样式",
-                items: [
-                  {
-                    label: "标题配置",
-                    items: [
-                      {
-                        label: "标题名字",
-                        name: "title",
-                        value: "我是标题qqqqq2"
-                      }
-                    ]
-                  },
-                  {
-                    label: "常用设置",
-                    items: [
-                      {
-                        label: "字体大小",
-                        name: "fontSize",
-                        value: 18,
-                        type: "num",
-                        range: [12, 150]
-                      },
-                      {
-                        label: "字体颜色",
-                        name: "color",
-                        value: "#70ffa7",
-                        type: "colorPick",
-                        col: 12
-                      },
-                      {
-                        label: "背景颜色",
-                        name: "bg_color",
-                        value: "#E39417",
-                        type: "colorPick",
-                        col: 12
-                      }
-                    ]
-                  }
-                ]
-              }
-            ] // 表单配置
-          } // 表单配置
-        },
-        {
-          uid: "u0003",
-          code: "U000001",
-          elName: "组件一", // 组件名
-          animations: [], // 动画
-          events: [], // 事件
-          data: {
-            name: "标题栏3",
-            config: [
-              {
-                label: "数据",
-                items: [
-                  {
-                    label: "标题名字",
-                    name: "title",
-                    value: "我是标题qqqqq2"
-                  }
-                ]
-              },
-              {
-                label: "样式",
-                items: [
-                  {
-                    label: "字体大小",
-                    name: "fontSize",
-                    value: 30,
-                    type: "num",
-                    range: [12, 150]
-                  },
-                  {
-                    label: "字体颜色",
-                    name: "color",
-                    value: "#BE216D",
-                    type: "colorPick"
-                  }
-                ]
-              }
-            ] // 表单配置
-          } // 表单配置 // 表单配置
-        }
-      ],
+      elements: [],
       projectData: dbModel.getProjectConfig(),
       currIndex: ""
     };
@@ -262,12 +134,15 @@ export default {
 .no-move {
   transition: transform 0s;
 }
+.dragArea-transiton {
+  min-height: 80vh;
+}
 </style>
 <style lang="scss">
 .edit .menu-wrap.active {
   .mask {
     display: block;
-    border: 2px dashed #e2115c;
+    border: 2px dashed #efd8e0;
   }
 }
 .ghost {

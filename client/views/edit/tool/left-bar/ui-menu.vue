@@ -95,9 +95,9 @@ export default {
         elName: item.name, // 组件名
         animations: [], // 动画
         events: [], // 事件
-        data: {
-          name: "",
-          config: []
+        config: {
+          name: item.name,
+          tabs: []
         } // 表单配置
       };
     }

@@ -30,6 +30,7 @@ const edit = {
       state.projectData = Object.assign({}, data);
     },
     setFormData(state, data) {
+      // console.log("data", data);
       state.formData = data;
     }
   },
@@ -87,14 +88,13 @@ const edit = {
       curComponentData = state.projectData.layouts[0].elements.find(v => {
         return v.uid === id;
       });
-
-      if (!cloneDeep(curComponentData.data.config).length) {
+      if (!cloneDeep(curComponentData.config.tabs).length) {
         import(`@/ui/${curComponentData.code}/form.js`).then(res => {
-          curComponentData.data = cloneDeep(res.default);
-          commit("setFormData", curComponentData.data);
+          curComponentData.config = cloneDeep(res.default);
+          commit("setFormData", curComponentData.config);
         });
       } else {
-        commit("setFormData", curComponentData.data);
+        commit("setFormData", curComponentData.config);
       }
     }
   },

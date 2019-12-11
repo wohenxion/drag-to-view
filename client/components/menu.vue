@@ -37,13 +37,7 @@
           v-if="index != count - 1"
         ></i>
       </el-tooltip>
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="删除"
-        placement="top"
-        v-if="count > 1"
-      >
+      <el-tooltip class="item" effect="dark" content="删除" placement="top">
         <i
           class="menu-icon el-icon-delete"
           @click="upPosition({ name: 'delete', index })"

@@ -1,7 +1,6 @@
 <template>
   <div class="u000002" :style="bodyStyle">
-    {{ componentData.code }}<br />
-    {{ config }}
+    <h2>{{ config.title }}</h2>
   </div>
 </template>
 <script>
@@ -23,7 +22,7 @@ export default {
 };
 </script>
 <style lang="scss" scope>
-.u000002 {
-  height: 250px;
+h2 {
+  padding: 20px;
 }
 </style>

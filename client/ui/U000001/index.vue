@@ -6,8 +6,7 @@
       color: config.color
     }"
   >
-    {{ componentData.code }}<br />
-    {{ config }}
+    <p>{{ config.title }}</p>
   </div>
 </template>
 <script>
@@ -33,6 +32,6 @@ export default {
 </script>
 <style lang="scss" scope>
 .u000001 {
-  height: 300px;
+  padding: 15px;
 }
 </style>
