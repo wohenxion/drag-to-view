@@ -126,6 +126,10 @@ export default {
       display: block;
     }
   }
+
+  .component-content {
+    text-align: left;
+  }
   .mask {
     display: none;
     position: absolute;

@@ -1,27 +1,23 @@
 <template>
-  <menus :componentData="componentData" :index="index">
-    <component
-      :is="code"
-      :componentData="componentData"
-      :config="configData"
-    ></component>
-  </menus>
+  <component
+    class="page-element"
+    :is="code"
+    :componentData="componentData"
+    :config="configData"
+  ></component>
 </template>
 <script>
-import { components } from "@/ui/index.js";
+import { components } from "@/ui/all.js";
 import { flattenMd } from "@common/uitls.js";
-const menus = () => import("./menu.vue");
-// import { flatten } from "lodash";
 export default {
-  props: ["componentData", "index"],
+  props: ["componentData"],
   data() {
     return {
       code: ""
     };
   },
   components: {
-    ...components,
-    menus
+    ...components
   },
   computed: {
     configData() {
@@ -36,7 +32,12 @@ export default {
   },
   mounted() {
     this.code = this.componentData.code;
-  },
-  watch: {}
+  }
 };
 </script>
+<style lang="scss">
+.page-element {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+</style>

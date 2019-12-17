@@ -7,17 +7,15 @@
 export default {
   props: ["componentData", "config"],
   name: "U000002",
-  data() {
-    return {
-      bodyStyle: {}
-    };
-  },
-  mounted() {
-    this.bodyStyle = {
-      fontSize: this.config.fontSize + "px",
-      color: this.config.color,
-      backgroundColor: this.config.bg_color
-    };
+  computed: {
+    bodyStyle() {
+      const style = {
+        fontSize: this.config.fontSize + "px",
+        color: this.config.color,
+        backgroundColor: this.config.bg_color
+      };
+      return style;
+    }
   }
 };
 </script>

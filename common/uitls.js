@@ -16,3 +16,19 @@ export const createUUID = function() {
   });
   return uuid;
 };
+
+/**
+ * 数组扁平化
+ * @param {Array} arr
+ */
+export const flattenMd = function(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i].items instanceof Array) {
+      result = result.concat(flattenMd(arr[i].items));
+    } else {
+      result.push(arr[i]);
+    }
+  }
+  return result;
+};

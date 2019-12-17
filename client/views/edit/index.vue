@@ -93,7 +93,7 @@ export default {
       // this.currIndex = item[Object.keys(item)[0]].newIndex;
       this.projectData.layouts[0].elements = this.elements;
       this.updatePro(this.projectData);
-      console.log("edit/index/id", item[Object.keys(item)[0]].element.uid);
+      // console.log("edit/index/id", item[Object.keys(item)[0]].element.uid);
       this.$store.dispatch(
         "editor/updateID",
         item[Object.keys(item)[0]].element.uid
