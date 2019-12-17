@@ -14,7 +14,7 @@ module.exports = {
     config.resolve.alias.set("@common", path.resolve("common"));
     config.module
       .rule("js")
-      .include.add(/page-template-1/)
+      .include.add(/page-template/)
       .end()
       .include.add(/client/)
       .end()
