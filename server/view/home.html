@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%- tesObj.age %></title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+
+    }
+
+    table,
+    td,
+    th {
+      font-size: 14px;
+      border-collapse: collapse;
+      border: 1px solid rgb(139, 138, 138);
+    }
+
+    tr>td,
+    tr>th {
+      padding: 15px;
+      width: 100px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <table border="1" style="border-collapse: collapse;">
+    <tr>
+      <th>ID</th>
+      <th>用户名：</th>
+      <th>年龄：</th>
+      <th>性别：</th>
+      <th>操作：</th>
+    </tr>
+    <% tesObj.forEach(function(user){ %>
+    <tr>
+      <td><%- user.id %></td>
+      <td><%- user.userName %></td>
+      <td><%- user.age %></td>
+      <td><%- user.sex %></td>
+      <td><button onclick="updateT('<%- user.id %>')">修改</button></td>
+    </tr>
+    <% }); %>
+  </table>
+  <script>
+    function updateT(id) {
+      fetch('/home/' + id, {
+        method: 'POST',
+        body: JSON.stringify({
+          age: 22,
+          userName: "张三1",
+          sex: "man",
+          height: "12kg"
+        }),
+        headers: new Headers({
+          'Content-Type': 'application/json'
+        })
+      }).then((response) => {
+        return response.json()
+      }).then((res) => {
+        console.log(res);
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,8 +1,8 @@
 .DS_Store
 node_modules
 /dist
-/serve/public/page_libs/
-
+/server/public/*
+package-lock.json
 # local env files
 .env.local
 .env.*.local
