@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/home/index";
+const Page = () => import("@/views/home/page.vue");
+const Setting = () => import("@/views/home/setting.vue");
 
 Vue.use(VueRouter);
 
@@ -8,7 +10,22 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
+    redirect: {
+      name: "pageList"
+    },
+    children: [
+      {
+        path: "/pageList",
+        component: Page,
+        name: "pageList"
+      },
+      {
+        path: "/setting",
+        component: Setting,
+        name: "setting"
+      }
+    ]
   },
   {
     path: "/about",

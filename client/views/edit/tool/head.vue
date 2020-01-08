@@ -1,8 +1,5 @@
 <template>
-  <div class="edit-nav">
-    <span class="icon-home"
-      ><router-link to="/"> <i class="el-icon-s-home"></i></router-link
-    ></span>
+  <navs>
     <ul class="nav-item">
       <li>
         <i class="el-icon-view"></i>
@@ -17,47 +14,35 @@
         <p>发布</p>
       </li>
     </ul>
-  </div>
+  </navs>
 </template>
 <script>
+import navs from "@/components/nav.vue";
 export default {
   data() {
     return {};
+  },
+  components: {
+    navs
   }
 };
 </script>
 <style scoped lang="scss">
-.edit-nav {
-  // text-align: left;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+.nav-item {
+  display: block;
+  font-size: 0;
+  padding: 10px;
+  li {
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: top;
+    cursor: pointer;
+    margin: 0 10px;
+    &:hover {
+      color: #409eff;
     }
-  }
-  .icon-home {
-    position: absolute;
-    left: 10px;
-    line-height: 58px;
-  }
-  .nav-item {
-    display: block;
-    font-size: 0;
-    padding: 10px;
-    li {
-      display: inline-block;
-      font-size: 14px;
-      vertical-align: top;
-      cursor: pointer;
-      margin: 0 10px;
-      &:hover {
-        color: #409eff;
-      }
-      i {
-        font-size: 20px;
-      }
+    i {
+      font-size: 20px;
     }
   }
 }

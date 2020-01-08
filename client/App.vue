@@ -72,7 +72,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 sup {
   vertical-align: text-top;
