@@ -18,7 +18,7 @@
         </template>
       </el-tabs>
     </div>
-    <div v-else>
+    <div v-else class="panel-none">
       请在画板上选择需要编辑得元素
     </div>
   </div>
@@ -53,5 +53,11 @@ export default {
   margin-bottom: 15px;
   padding-bottom: 10px;
   // border-bottom: 1px dashed #dcdfe6;
+}
+.panel-none {
+  font-size: 16px;
+  text-align: center;
+  padding-top: 60px;
+  color: #a7a9a7;
 }
 </style>

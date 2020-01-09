@@ -21,7 +21,7 @@
       </el-aside>
       <el-container>
         <el-main>
-          <router-link to="/edit">Edit</router-link>
+          <!-- <router-link to="/edit">Edit</router-link> -->
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -50,7 +50,7 @@ export default {
   height: 100%;
 }
 .el-main {
-  background-color: #e9eef3;
+  background-color: #efefef;
   color: #333;
 }
 .el-menu {
