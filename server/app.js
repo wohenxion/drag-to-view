@@ -24,6 +24,7 @@ app.use(function(ctx, next) {
   ctx.state = ctx.state || {};
   ctx.state.now = new Date();
   ctx.state.ip = ctx.ip;
+  ctx.state.userID = "5dfadf3f2018fcfe2dfd3433";
   ctx.state.version = "2.0.0";
   return next();
 });
@@ -90,7 +91,7 @@ const getData = () => {
 //   });
 // });
 
-//配置路由
+// 配置路由
 fs.readdirSync(path.join(__dirname, "./routes")).forEach(route => {
   let api = require(`./routes/${route}`);
   router.use(

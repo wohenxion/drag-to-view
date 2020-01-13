@@ -18,5 +18,8 @@ module.exports = {
         mocha: true
       }
     }
-  ]
+  ],
+  globals: {
+    INTERFACE: true
+  }
 };

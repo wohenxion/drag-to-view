@@ -1,18 +1,18 @@
 <template>
   <div class="page-list-wrap">
     <ul class="card-wrap">
-      <li class="list-item" v-for="i in 1" :key="i">
+      <li class="list-item" v-for="i in pages" :key="i._id">
         <div class="img-card">
           <ul class="img-card-menu">
             <el-tooltip content="编辑" placement="top">
-              <li>
+              <li
+                @click="$router.push({ name: 'edit', params: { pid: i.pid } })"
+              >
                 <i class="el-icon-s-open"></i>
               </li>
             </el-tooltip>
             <el-tooltip content="预览" placement="top">
-              <li
-                @click="$router.push({ name: 'edit', params: { id: '123' } })"
-              >
+              <li>
                 <i class="el-icon-s-platform"></i>
               </li>
             </el-tooltip>
@@ -29,9 +29,9 @@
           <i class="el-icon-s-help icon-bg"></i>
         </div>
         <div class="card-foot">
-          <p>好吃的汉堡</p>
+          <p>{{ i.title }}</p>
           <div class="bottom clearfix">
-            <time class="time">{{ new Date().toLocaleDateString() }}</time>
+            <time class="time">{{ i.createdAt | formatDate }}</time>
             <el-button type="text" class="button">操作按钮</el-button>
           </div>
         </div>
@@ -90,12 +90,17 @@ export default {
         name: "",
         desc: ""
       },
-      dialogFormVisible: false
+      dialogFormVisible: false,
+      pages: []
     };
+  },
+  mounted() {
+    window.INTERFACE.Pages.PageList().then(res => {
+      this.pages = res.data;
+    });
   },
   methods: {
     handleCreatePage() {
-      console.log(1);
       this.dialogFormVisible = true;
       // this.$router.push({ name: "edit", params: { id: "123" } });
     }
