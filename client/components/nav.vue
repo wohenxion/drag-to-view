@@ -1,15 +1,21 @@
 <template>
   <div class="edit-nav">
     <span class="icon-home"
-      ><router-link to="/"> <i class="el-icon-platform-eleme"></i></router-link
+      ><router-link to="/pageList">
+        <i class="el-icon-platform-eleme"></i></router-link
     ></span>
     <slot> </slot>
+    <loginout></loginout>
   </div>
 </template>
 <script>
+const loginout = () => import("../views/login/loginout");
 export default {
   data() {
     return {};
+  },
+  components: {
+    loginout
   }
 };
 </script>

@@ -4,21 +4,21 @@
       <li class="list-item" v-for="i in pages" :key="i._id">
         <div class="img-card">
           <ul class="img-card-menu">
-            <el-tooltip content="编辑" placement="top">
-              <li
-                @click="$router.push({ name: 'edit', params: { pid: i.pid } })"
-              >
-                <i class="el-icon-s-open"></i>
-              </li>
-            </el-tooltip>
             <el-tooltip content="预览" placement="top">
               <li>
-                <i class="el-icon-s-platform"></i>
+                <router-link
+                  target="_blank"
+                  :to="{
+                    path: '/preview/' + i.pid
+                  }"
+                >
+                  <i class="el-icon-s-platform"></i>
+                </router-link>
               </li>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
               <li>
-                <i class="el-icon-warning"></i>
+                <i class="el-icon-error"></i>
               </li>
             </el-tooltip>
           </ul>
@@ -32,7 +32,12 @@
           <p>{{ i.title }}</p>
           <div class="bottom clearfix">
             <time class="time">{{ i.createdAt | formatDate }}</time>
-            <el-button type="text" class="button">操作按钮</el-button>
+            <el-button
+              type="text"
+              class="button"
+              @click="$router.push({ name: 'edit', params: { pid: i.pid } })"
+              >编辑</el-button
+            >
           </div>
         </div>
       </li>
@@ -103,6 +108,12 @@ export default {
     handleCreatePage() {
       this.dialogFormVisible = true;
       // this.$router.push({ name: "edit", params: { id: "123" } });
+    },
+    handlePreview(pid) {
+      let routeUrl = this.$router.resolve({
+        path: "/preview/" + pid
+      });
+      window.open(routeUrl.href, "_blank");
     }
   }
 };
@@ -129,6 +140,9 @@ export default {
   justify-content: flex-start;
   min-width: 1000px;
 }
+a {
+  color: #333;
+}
 .list-item {
   width: 230px;
   height: 320px;
@@ -136,9 +150,9 @@ export default {
   border-radius: 8px;
 
   background-color: #ffffff;
-  transition: transform 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
+  // transition: transform 0.1s cubic-bezier(0.65, 0.05, 0.36, 1);
   &:hover {
-    transform: translateY(-4px);
+    // transform: translateY(-4px);
     box-shadow: 0px 0px 12px 3px #adadad;
     .item-card.create {
       color: #25a589;
@@ -208,6 +222,9 @@ export default {
         &:hover {
           background-color: #409eff;
           color: #ffffff;
+          a {
+            color: #ffffff;
+          }
         }
       }
     }

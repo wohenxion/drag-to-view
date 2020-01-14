@@ -72,9 +72,22 @@ export default {
     ...mapState("editor", ["activeElementUUID"])
   },
   mounted() {
+    let params = {
+      pid: this.$route.params.pid
+    };
+    INTERFACE.Pages.PageDetail(params).then(res => {
+      this.projectData = res.data;
+      if (this.projectData.layouts.length == 0) {
+        this.projectData.layouts.push({
+          elements: []
+        });
+      } else {
+        this.elements = this.projectData.layouts[0].elements;
+      }
+      this.updatePro(this.projectData);
+    });
     // this.projectData.layouts[0] 此处只考虑单布局，所以写死为0;如果要实现多布局，需要外面再循环，然后取对应的layout下标
-    this.projectData.layouts[0].elements = this.elements;
-    this.updatePro(this.projectData);
+
     this.bindEvent();
   },
   methods: {
@@ -90,10 +103,8 @@ export default {
       dataTransfer.setDragImage(img, 50, 20);
     },
     change(item) {
-      // this.currIndex = item[Object.keys(item)[0]].newIndex;
       this.projectData.layouts[0].elements = this.elements;
       this.updatePro(this.projectData);
-      // console.log("edit/index/id", item[Object.keys(item)[0]].element.uid);
       this.$store.dispatch(
         "editor/updateID",
         item[Object.keys(item)[0]].element.uid

@@ -23,11 +23,11 @@ let layoutConfig = {
 };
 // 项目配置信息字段
 let projectConfig = {
-  pid: "",
+  pid: "1",
   title: "未命名场景",
   description: "我用夸克可视化编辑器做了一个超酷炫的H5，快来看看吧。",
   coverImage: "",
-  auther: "",
+  auther: "5dfadf3f2018fcfe2dfd3433",
   layouts: []
 };
 

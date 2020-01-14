@@ -18,18 +18,24 @@
 import render from "../components/render";
 export default {
   name: "pageViewTemplate",
+  props: ["curPageData"],
+  computed: {
+    pageData() {
+      return this.curPageData || window._pageData;
+    }
+  },
   data() {
     return {
-      pageData: {
-        layouts: []
-      }
+      // pageData: {
+      //   layouts: []
+      // }
     };
   },
   components: {
     render
   },
-  created() {
-    this.pageData = window._pageData;
+  mounted() {
+    // this.pageData = this.curPageData || window._pageData;
   }
 };
 </script>

@@ -28,6 +28,7 @@
 <script>
 // import dbModel from "@/views/DataModel";
 import { mapState } from "vuex";
+import { createUUID } from "@common/uitls";
 const draggable = () => import("vuedraggable");
 // import draggable from 'vuedraggable'
 export default {
@@ -90,7 +91,7 @@ export default {
   methods: {
     cloneDog(item) {
       return {
-        uid: Math.random().toString(36),
+        uid: createUUID(),
         code: item.code,
         elName: item.name, // 组件名
         animations: [], // 动画

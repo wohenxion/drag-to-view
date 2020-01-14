@@ -1,5 +1,5 @@
 import axios from "./axios.js";
-
+// 暂时不用改封装
 export default {
   /**
    * get 请求

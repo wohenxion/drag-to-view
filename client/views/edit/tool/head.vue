@@ -5,7 +5,7 @@
         <i class="el-icon-view"></i>
         <p>预览</p>
       </li>
-      <li>
+      <li @click="handleSave">
         <i class="el-icon-success"></i>
         <p>保存</p>
       </li>
@@ -18,12 +18,27 @@
 </template>
 <script>
 import navs from "@/components/nav.vue";
+import { mapState } from "vuex";
 export default {
   data() {
     return {};
   },
   components: {
     navs
+  },
+  computed: {
+    ...mapState("editor", ["projectData"])
+  },
+  methods: {
+    handleSave() {
+      let data = {
+        pid: this.$route.params.pid,
+        data: this.projectData
+      };
+      INTERFACE.Pages.SavePage(data).then(res => {
+        console.log(res);
+      });
+    }
   }
 };
 </script>
