@@ -14,11 +14,13 @@ npm run serve
 
 #### 技术栈 
 只是简单实现
-1. `vue`
-2. `vuex`
+1. `vue + vuex + element-ui 全家桶`
+2. `axios`
 3. `sass`
-4. `element-ui`
+4. `vuedraggable`
 5. `loadsh`
+6. `mongodDB`
+7. `koa2`
 
 #### 项目初始化
 ```
