@@ -2,8 +2,15 @@
   <navs>
     <ul class="nav-item">
       <li>
-        <i class="el-icon-view"></i>
-        <p>预览</p>
+        <router-link
+          target="_blank"
+          :to="{
+            path: '/preview/' + pid
+          }"
+        >
+          <i class="el-icon-view"></i>
+          <p>预览</p>
+        </router-link>
       </li>
       <li @click="handleSave">
         <i class="el-icon-success"></i>
@@ -27,16 +34,26 @@ export default {
     navs
   },
   computed: {
+    pid() {
+      return this.$route.params.pid;
+    },
     ...mapState("editor", ["projectData"])
   },
   methods: {
     handleSave() {
       let data = {
-        pid: this.$route.params.pid,
+        pid: this.pid,
         data: this.projectData
       };
       INTERFACE.Pages.SavePage(data).then(res => {
-        console.log(res);
+        if (res.status == 200) {
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        } else {
+          this.$message.error(res.statusText);
+        }
       });
     }
   }
@@ -47,7 +64,8 @@ export default {
   display: block;
   font-size: 0;
   padding: 10px;
-  li {
+  li,
+  a {
     display: inline-block;
     font-size: 14px;
     vertical-align: top;

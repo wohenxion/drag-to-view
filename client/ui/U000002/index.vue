@@ -20,7 +20,7 @@ export default {
 };
 </script>
 <style lang="scss" scope>
-h2 {
+.u000002 h2 {
   padding: 20px;
 }
 </style>

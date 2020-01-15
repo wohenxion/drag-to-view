@@ -20,8 +20,27 @@ export default {
   SavePage: data => {
     return axios({
       url: "/page/save",
+      method: "put",
+      data
+    });
+  },
+  /**
+   * 页面添加
+   */
+  CreatPage: data => {
+    return axios({
+      url: "/page/add",
       method: "post",
       data
+    });
+  },
+  /**
+   * 页面添加
+   */
+  DeletetPage: pid => {
+    return axios({
+      url: "/page/delete/" + pid,
+      method: "delete"
     });
   }
 };

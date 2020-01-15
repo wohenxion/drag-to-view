@@ -3,7 +3,8 @@
     class="u000001"
     :style="{
       fontSize: config.fontSize + 'px',
-      color: config.color
+      color: config.color,
+      backgroundColor: config.bg_color
     }"
   >
     <p>{{ config.title }}</p>

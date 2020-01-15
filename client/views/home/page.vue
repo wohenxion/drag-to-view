@@ -17,7 +17,7 @@
               </li>
             </el-tooltip>
             <el-tooltip content="删除" placement="top">
-              <li>
+              <li @click="handleDeletePage(i.pid)">
                 <i class="el-icon-error"></i>
               </li>
             </el-tooltip>
@@ -58,8 +58,13 @@
       :visible.sync="dialogFormVisible"
       style="text-align:left"
     >
-      <el-form :model="form" :label-width="formLabelWidth">
-        <el-form-item label="标题：">
+      <el-form
+        :model="form"
+        :label-width="formLabelWidth"
+        :rules="rules"
+        ref="creatForm"
+      >
+        <el-form-item label="标题：" prop="name">
           <el-input
             v-model="form.name"
             autocomplete="off"
@@ -67,7 +72,7 @@
             show-word-limit
           ></el-input>
         </el-form-item>
-        <el-form-item label="描述：">
+        <el-form-item label="描述：" prop="desc">
           <el-input
             type="textarea"
             v-model="form.desc"
@@ -79,7 +84,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
+        <el-button type="primary" @click="handleSavePage('creatForm')"
           >确 定</el-button
         >
       </div>
@@ -96,15 +101,22 @@ export default {
         desc: ""
       },
       dialogFormVisible: false,
-      pages: []
+      pages: [],
+      rules: {
+        name: [{ required: true, message: "请输入页面名称", trigger: "blur" }],
+        desc: [{ required: true, message: "请输入页面描述", trigger: "blur" }]
+      }
     };
   },
   mounted() {
-    window.INTERFACE.Pages.PageList().then(res => {
-      this.pages = res.data;
-    });
+    this.init();
   },
   methods: {
+    init() {
+      window.INTERFACE.Pages.PageList().then(res => {
+        this.pages = res.data;
+      });
+    },
     handleCreatePage() {
       this.dialogFormVisible = true;
       // this.$router.push({ name: "edit", params: { id: "123" } });
@@ -114,6 +126,44 @@ export default {
         path: "/preview/" + pid
       });
       window.open(routeUrl.href, "_blank");
+    },
+    handleSavePage(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          let data = {
+            title: this.form.name,
+            description: this.form.desc,
+            layouts: []
+          };
+          window.INTERFACE.Pages.CreatPage(data).then(res => {
+            if (res.status == 200) {
+              this.$message({
+                message: "添加成功",
+                type: "success"
+              });
+              this.init();
+              this.dialogFormVisible = false;
+            } else {
+              this.$message.error(res.statusText);
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    handleDeletePage(pid) {
+      window.INTERFACE.Pages.DeletetPage(pid).then(res => {
+        if (res.status == 200) {
+          this.$message({
+            message: "删除成功",
+            type: "success"
+          });
+          this.init();
+        } else {
+          this.$message.error(res.statusText);
+        }
+      });
     }
   }
 };
