@@ -10,7 +10,7 @@ npm run dev-server
 npm run serve
 ```
 #### 效果图 
-![示例 图片示例](https://s2.ax1x.com/2020/01/15/lO06zt.gif)
+![示例](https://s2.ax1x.com/2020/01/15/lO06zt.gif)
 
 #### 技术栈 
 只是简单实现
