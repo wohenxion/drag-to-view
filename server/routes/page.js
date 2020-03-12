@@ -18,6 +18,15 @@ router.put("/save", async ctx => {
   );
 });
 
+router.get("/:id", async ctx => {
+  let pageData;
+  console.log(ctx.params.id, pageData);
+  pageData = await Page.findOne({pid: ctx.params.id});
+  await ctx.render("index", {
+    pageData
+  });
+});
+
 router.post("/add", async ctx => {
   let author = ctx.state.userID;
   let data = ctx.request.body;

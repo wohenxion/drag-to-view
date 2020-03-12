@@ -35,8 +35,8 @@ app.use(function(ctx, next) {
 // # localhost: 本地的地址（因为这是本地环境）
 // # 27017: mongodb的端口号(这个一般是默认值，也可以进行修改)
 // # test: 数据库的名字
-// var db = "mongodb://admin:123456@localhost:27017/test";
-var db = "mongodb://root:admin123..@localhost:27017/dragPage";
+var db = "mongodb://admin:123456@localhost:27017/test";
+// var db = "mongodb://root:admin123..@localhost:27017/dragPage";
 
 // 连接
 mongoose.connect(
@@ -102,13 +102,7 @@ fs.readdirSync(path.join(__dirname, "./routes")).forEach(route => {
 	);
 });
 
-router.get("/", async ctx => {
-	let pageData;
-	pageData = await getData();
-	await ctx.render("index", {
-		pageData
-	});
-});
+
 // 加载路由中间件
 app.use(router.routes()).use(router.allowedMethods());
 app.listen(3001);
